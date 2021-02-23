@@ -6,6 +6,8 @@ import LoginForm from './LoginForm'
 import SignupForm from './SignupForm'
 import jwtDecode from 'jwt-decode'
 import { winery } from '../../constants/paths'
+import { useSelector } from 'react-redux'
+import { getAuthenticated } from '../../redux/selectors/authSelectors'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -19,10 +21,12 @@ const useStyles = makeStyles((theme) => ({
 
 const AuthenticationScene = () => {
   const classes = useStyles()
+  const isAuthenticated = useSelector(getAuthenticated)
   const [activeForm, setActiveForm] = useState('login')
 
+  useEffect(() => {}, [isAuthenticated])
+
   const token = localStorage.FBIdToken
-  useEffect(() => {}, [token])
   if (token) {
     const decodedToken: any = jwtDecode(token)
     if (decodedToken.exp * 1000 > Date.now()) {

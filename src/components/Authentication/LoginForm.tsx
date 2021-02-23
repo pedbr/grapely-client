@@ -5,6 +5,8 @@ import TextField from '@material-ui/core/TextField'
 import { useForm } from 'react-hook-form'
 import Button from '@material-ui/core/Button'
 import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import { authenticateUser } from '../../redux/actions/authActions'
 
 const useStyles = makeStyles((theme) => ({
   formTitle: {
@@ -18,6 +20,7 @@ const LoginForm = () => {
   const classes = useStyles()
   const [loading, setLoading] = useState(false)
   const { register, handleSubmit, errors } = useForm()
+  const dispatch = useDispatch()
   const onSubmit = (data: any) => {
     console.log(data)
     setLoading(true)
@@ -25,6 +28,7 @@ const LoginForm = () => {
       .post('/login', data)
       .then((res) => {
         localStorage.setItem('FBIdToken', `Bearer ${res.data.token}`)
+        dispatch(authenticateUser())
       })
       .catch((err) => {
         console.log(err.response.data)
