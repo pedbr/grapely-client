@@ -6,7 +6,9 @@ const FONT_PRIMARY = 'Be Vietnam, sans-serif' // Google Font
 // const FONT_SECONDARY = 'CircularStd, sans-serif'; // Local Font
 
 const Typography = {
-  fontFamily: FONT_PRIMARY,
+  fonts: {
+    main: FONT_PRIMARY,
+  },
 
   fontWeightRegular: 500,
   fontWeightMedium: 600,

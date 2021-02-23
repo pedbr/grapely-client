@@ -4,10 +4,10 @@ import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import { useForm } from 'react-hook-form'
 import Button from '@material-ui/core/Button'
-import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { authenticateUser } from 'redux/actions/authActions'
 import endpoints from 'api/endpoints'
+import { post } from 'api'
 
 const useStyles = makeStyles((theme) => ({
   formTitle: {
@@ -25,10 +25,9 @@ const SignupForm = () => {
   const onSubmit = async (data: any) => {
     console.log(data)
     setLoading(true)
-    await axios
-      .post(endpoints.signUp, data)
+    await post(endpoints.signUp, data)
       .then((res) => {
-        localStorage.setItem('FBIdToken', `Bearer ${res.data.token}`)
+        localStorage.setItem('FBIdToken', `Bearer ${res?.data.token}`)
         dispatch(authenticateUser())
       })
       .catch((err) => {

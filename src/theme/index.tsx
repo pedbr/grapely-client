@@ -30,6 +30,12 @@ function ThemeConfig({ children }: Props) {
     customTypography: typography,
     shape: borderRadius,
     breakpoints: breakpointsX,
+    appBar: {
+      height: 92,
+    },
+    borderRadius: {
+      card: 20,
+    },
   }
 
   if (!isLight) themeOptions.palette.mode = 'dark'

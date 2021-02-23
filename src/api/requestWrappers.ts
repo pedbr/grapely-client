@@ -38,12 +38,14 @@ const request = async (method: MethodType, url: string, payload?: any) => {
         'Cache-Control': 'no-cache',
       },
     }).catch((err) => {
+      console.log('test1', err)
       if (axios.isCancel(err)) {
         err.cancelled = true
       }
       throw err
     })
   } catch (e) {
+    console.log('test2', e)
     console.error(e)
   }
 }
