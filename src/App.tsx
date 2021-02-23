@@ -7,6 +7,8 @@ import store from './redux/store'
 import Navbar from './components/Navbar/Navbar'
 import ThemeConfig from './theme'
 import { Routes } from './constants/routes'
+import { ReactQueryDevtools } from 'react-query/devtools'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
 const useStyles = makeStyles({
   container: {
@@ -22,33 +24,44 @@ interface RouteType {
   component: React.ComponentType<any>
 }
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+})
+
 const history = createBrowserHistory()
 
 const App = (): JSX.Element => {
   const classes = useStyles()
   return (
-    <Provider store={store}>
-      <Router history={history}>
-        <ThemeConfig>
-          <Navbar />
-          <div className={classes.container}>
-            <Switch>
-              {Routes.map((route: RouteType) => {
-                const Component = route.component
-                return (
-                  <Route
-                    exact={route.exact}
-                    key={route.name}
-                    path={route.path}
-                    render={(props): JSX.Element => <Component {...props} />}
-                  />
-                )
-              })}
-            </Switch>
-          </div>
-        </ThemeConfig>
-      </Router>
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <Router history={history}>
+          <ThemeConfig>
+            <Navbar />
+            <div className={classes.container}>
+              <Switch>
+                {Routes.map((route: RouteType) => {
+                  const Component = route.component
+                  return (
+                    <Route
+                      exact={route.exact}
+                      key={route.name}
+                      path={route.path}
+                      render={(props): JSX.Element => <Component {...props} />}
+                    />
+                  )
+                })}
+              </Switch>
+            </div>
+          </ThemeConfig>
+        </Router>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </Provider>
+    </QueryClientProvider>
   )
 }
 

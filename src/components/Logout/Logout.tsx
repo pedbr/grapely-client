@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
-import { auth } from '../../constants/paths'
+import { auth } from 'constants/paths'
 import { useDispatch, useSelector } from 'react-redux'
-import { revokeAuthentication } from '../../redux/actions/authActions'
-import { getAuthenticated } from '../../redux/selectors/authSelectors'
+import { revokeAuthentication } from 'redux/actions/authActions'
+import { getAuthenticated } from 'redux/selectors/authSelectors'
 
 const Logout = () => {
   const dispatch = useDispatch()

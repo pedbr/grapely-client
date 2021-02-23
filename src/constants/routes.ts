@@ -1,9 +1,9 @@
 import { auth, winery, dashboards, taskManager, logout } from './paths'
-import AuthenticationScene from '../components/Authentication/AuthenticationScene'
-import WineryScene from '../components/Winery/WineryScene'
-import DashboardsScene from '../components/Dashboards/DashboardsScene'
-import TaskManagerScene from '../components/TaskManager/TaskManagerScene'
-import Logout from '../components/Logout/Logout'
+import AuthenticationScene from 'components/Authentication/AuthenticationScene'
+import WineryScene from 'components/Winery/WineryScene'
+import DashboardsScene from 'components/Dashboards/DashboardsScene'
+import TaskManagerScene from 'components/TaskManager/TaskManagerScene'
+import Logout from 'components/Logout/Logout'
 
 export const Routes = [
   {

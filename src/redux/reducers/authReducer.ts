@@ -1,4 +1,4 @@
-import { AUTHENTICATE_USER, REVOKE_AUTHENTICATION } from '../actions'
+import { AUTHENTICATE_USER, REVOKE_AUTHENTICATION } from 'redux/actions'
 
 interface AuthenticateUserAction {
   type: typeof AUTHENTICATE_USER

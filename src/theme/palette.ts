@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 export const rgbToHex = (rgb: any) => {
-  const [r, g, b] = rgb.match(/^rgba?\(\s*(\d*)\s*,\s*(\d*)\s*,\s*(\d*).*?\)$/) // eslint-disable-line no-unused-vars
+  const [r, g, b] = rgb.match(/^rgba?\(\s*(\d*)\s*,\s*(\d*)\s*,\s*(\d*).*?\)$/)
   return { r, g, b }
 }
 
