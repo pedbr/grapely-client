@@ -10,7 +10,7 @@ import { Routes } from './constants/routes'
 
 const useStyles = makeStyles({
   container: {
-    marginTop: 92,
+    paddingTop: 92,
     height: '100%',
   },
 })
