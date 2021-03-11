@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const WineryScene = () => {
+const WineryCollection = () => {
   const classes = useStyles()
   const [open, setOpen] = React.useState(false)
   const queryClient = useQueryClient()
@@ -123,4 +123,4 @@ const WineryScene = () => {
   )
 }
 
-export default WineryScene
+export default WineryCollection
