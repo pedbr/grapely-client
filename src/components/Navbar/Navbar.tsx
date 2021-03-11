@@ -5,12 +5,11 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Button from '@material-ui/core/Button'
 import { addTransparency } from 'theme/palette'
 import { Link } from 'react-router-dom'
-import { winery, dashboards, taskManager, logout } from 'constants/paths'
+import { winery, dashboards, taskManager, logout, auth } from 'constants/paths'
 import { useDispatch, useSelector } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import jwtDecode from 'jwt-decode'
 import { getAuthenticated } from 'redux/selectors/authSelectors'
-import { auth } from 'constants/paths'
 import { authenticateUser } from 'redux/actions/authActions'
 
 const useStyles = makeStyles((theme) => ({
@@ -43,7 +42,7 @@ const Navbar = () => {
   const isAuthenticated = useSelector(getAuthenticated)
 
   const token = localStorage.FBIdToken
-  if (token) {
+  if (token && token !== 'Bearer undefined') {
     const decodedToken: any = jwtDecode(token)
     if (decodedToken.exp * 1000 > Date.now()) {
       dispatch(authenticateUser())

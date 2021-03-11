@@ -6,8 +6,9 @@ import { useForm } from 'react-hook-form'
 import Button from '@material-ui/core/Button'
 import { useDispatch } from 'react-redux'
 import { authenticateUser } from 'redux/actions/authActions'
+import { BASE_URL } from 'api/requestWrappers'
 import endpoints from 'api/endpoints'
-import { post } from 'api'
+import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
   formTitle: {
@@ -23,9 +24,8 @@ const LoginForm = () => {
   const { register, handleSubmit, errors } = useForm()
   const dispatch = useDispatch()
   const onSubmit = async (data: any) => {
-    console.log(data)
     setLoading(true)
-    await post(endpoints.login, data)
+    await axios({ method: 'post', url: `${BASE_URL}${endpoints.login}`, data })
       .then((res) => {
         localStorage.setItem('FBIdToken', `Bearer ${res?.data.token}`)
         dispatch(authenticateUser())

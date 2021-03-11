@@ -1,6 +1,10 @@
 import axios from 'axios'
+import jwtDecode from 'jwt-decode'
+import history from 'utils/history'
+import { logout, auth } from 'constants/paths'
 
-const BASE_URL = 'https://europe-west1-winery-app-b819d.cloudfunctions.net/api'
+export const BASE_URL =
+  'https://europe-west1-winery-app-b819d.cloudfunctions.net/api'
 
 type MethodType =
   | 'get'
@@ -27,26 +31,33 @@ type MethodType =
 
 const request = async (method: MethodType, url: string, payload?: any) => {
   const token = localStorage.FBIdToken
-  try {
-    return axios({
-      method,
-      url: `${BASE_URL}${url}`,
-      data: payload,
-      headers: {
-        Authorization: `${token}`,
-        'Content-Type': 'application/json;  charset=UTF-8',
-        'Cache-Control': 'no-cache',
-      },
-    }).catch((err) => {
-      console.log('test1', err)
-      if (axios.isCancel(err)) {
-        err.cancelled = true
+  if (token && token !== 'Bearer undefined') {
+    const decodedToken: any = jwtDecode(token)
+    if (decodedToken.exp * 1000 > Date.now()) {
+      try {
+        return axios({
+          method,
+          url: `${BASE_URL}${url}`,
+          data: payload,
+          headers: {
+            Authorization: `${token}`,
+            'Content-Type': 'application/json;  charset=UTF-8',
+            'Cache-Control': 'no-cache',
+          },
+        }).catch((err) => {
+          if (axios.isCancel(err)) {
+            err.cancelled = true
+          }
+          throw err
+        })
+      } catch (e) {
+        console.error(e)
       }
-      throw err
-    })
-  } catch (e) {
-    console.log('test2', e)
-    console.error(e)
+    } else {
+      return history.push(logout)
+    }
+  } else {
+    return history.push(auth)
   }
 }
 export const _request = request

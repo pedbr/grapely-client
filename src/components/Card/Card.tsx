@@ -14,9 +14,9 @@ interface Props {
   children: React.ReactNode | JSX.Element
 }
 
-const Base = ({ children }: Props) => {
+const Card = ({ children }: Props) => {
   const classes = useStyles()
   return <Paper className={classes.paper}>{children}</Paper>
 }
 
-export default Base
+export default Card

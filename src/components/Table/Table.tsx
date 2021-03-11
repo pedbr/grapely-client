@@ -5,7 +5,7 @@ import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import { useTable } from 'react-table'
+import { useTable, useSortBy } from 'react-table'
 
 interface Props {
   columns: any
@@ -14,10 +14,13 @@ interface Props {
 
 const Table = ({ columns, data }: Props) => {
   // Use the state and functions returned from useTable to build your UI
-  const { getTableProps, headerGroups, rows, prepareRow } = useTable({
-    columns,
-    data,
-  })
+  const { getTableProps, headerGroups, rows, prepareRow } = useTable(
+    {
+      columns,
+      data,
+    },
+    useSortBy
+  )
 
   // Render the UI for your table
   return (
@@ -25,9 +28,14 @@ const Table = ({ columns, data }: Props) => {
       <TableHead>
         {headerGroups.map((headerGroup) => (
           <TableRow {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column) => (
-              <TableCell {...column.getHeaderProps()}>
+            {headerGroup.headers.map((column: any) => (
+              <TableCell
+                {...column.getHeaderProps(column.getSortByToggleProps())}
+              >
                 {column.render('Header')}
+                <span>
+                  {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}
+                </span>
               </TableCell>
             ))}
           </TableRow>
