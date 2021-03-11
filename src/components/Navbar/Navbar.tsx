@@ -5,7 +5,13 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Button from '@material-ui/core/Button'
 import { addTransparency } from 'theme/palette'
 import { Link } from 'react-router-dom'
-import { winery, dashboards, taskManager, logout, auth } from 'constants/paths'
+import {
+  wineries,
+  dashboards,
+  taskManager,
+  logout,
+  auth,
+} from 'constants/paths'
 import { useDispatch, useSelector } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import jwtDecode from 'jwt-decode'
@@ -60,8 +66,8 @@ const Navbar = () => {
       <Toolbar classes={{ root: classes.toolbar }}>
         {isAuthenticated && (
           <>
-            <Link className={classes.link} to={winery}>
-              <Button>Winery</Button>
+            <Link className={classes.link} to={wineries}>
+              <Button>Wineries</Button>
             </Link>
             <Link className={classes.link} to={dashboards}>
               <Button>Dashboards</Button>

@@ -1,5 +1,13 @@
-import { auth, winery, dashboards, taskManager, logout } from './paths'
+import {
+  auth,
+  wineries,
+  winery,
+  dashboards,
+  taskManager,
+  logout,
+} from './paths'
 import AuthenticationScene from 'components/Authentication/AuthenticationScene'
+import WineryCollection from 'components/Winery/WineryCollection'
 import WineryScene from 'components/Winery/WineryScene'
 import DashboardsScene from 'components/Dashboards/DashboardsScene'
 import TaskManagerScene from 'components/TaskManager/TaskManagerScene'
@@ -11,6 +19,12 @@ export const Routes = [
     path: auth,
     exact: true,
     component: AuthenticationScene,
+  },
+  {
+    name: 'wineries',
+    path: wineries,
+    exact: true,
+    component: WineryCollection,
   },
   {
     name: 'winery',

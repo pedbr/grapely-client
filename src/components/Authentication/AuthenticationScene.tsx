@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button'
 import LoginForm from './LoginForm'
 import SignupForm from './SignupForm'
 import jwtDecode from 'jwt-decode'
-import { winery } from '../../constants/paths'
+import { wineries } from '../../constants/paths'
 import { useSelector } from 'react-redux'
 import { getAuthenticated } from '../../redux/selectors/authSelectors'
 
@@ -30,7 +30,7 @@ const AuthenticationScene = () => {
   if (token) {
     const decodedToken: any = jwtDecode(token)
     if (decodedToken.exp * 1000 > Date.now()) {
-      return <Redirect to={winery} />
+      return <Redirect to={wineries} />
     }
   }
 
