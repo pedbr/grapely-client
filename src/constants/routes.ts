@@ -2,16 +2,24 @@ import {
   auth,
   wineries,
   winery,
+  containers,
+  container,
+  batches,
+  batch,
   dashboards,
   taskManager,
   logout,
 } from './paths'
 import AuthenticationScene from 'components/Authentication/AuthenticationScene'
-import WineryCollection from 'components/Winery/WineryCollection'
+import WineriesCollection from 'components/Winery/WineriesCollection'
 import WineryScene from 'components/Winery/WineryScene'
 import DashboardsScene from 'components/Dashboards/DashboardsScene'
 import TaskManagerScene from 'components/TaskManager/TaskManagerScene'
 import Logout from 'components/Logout/Logout'
+import ContainersCollection from 'components/Container/ContainersCollection'
+import ContainerScene from 'components/Container/ContainerScene'
+import BatchesCollection from 'components/Batch/BatchesCollection'
+import BatchScene from 'components/Batch/BatchScene'
 
 export const Routes = [
   {
@@ -24,13 +32,37 @@ export const Routes = [
     name: 'wineries',
     path: wineries,
     exact: true,
-    component: WineryCollection,
+    component: WineriesCollection,
   },
   {
     name: 'winery',
     path: winery,
     exact: true,
     component: WineryScene,
+  },
+  {
+    name: 'containers',
+    path: containers,
+    exact: true,
+    component: ContainersCollection,
+  },
+  {
+    name: 'container',
+    path: container,
+    exact: true,
+    component: ContainerScene,
+  },
+  {
+    name: 'batches',
+    path: batches,
+    exact: true,
+    component: BatchesCollection,
+  },
+  {
+    name: 'batch',
+    path: batch,
+    exact: true,
+    component: BatchScene,
   },
   {
     name: 'dashboards',

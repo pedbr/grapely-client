@@ -9,8 +9,9 @@ import Card from 'components/Card'
 import Header from 'components/Header'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
-import { useParams } from 'react-router-dom'
+import { generatePath, Link, useParams } from 'react-router-dom'
 import ContainerForm from 'components/Container/ContainerForm'
+import { container } from 'constants/paths'
 
 const useStyles = makeStyles((theme) => ({
   headerContainer: {
@@ -75,6 +76,18 @@ const WineryScene = () => {
         id: 'name',
         Header: 'Name',
         accessor: 'name',
+        Cell({ row, value }: any) {
+          return (
+            <Link
+              className={classes.link}
+              to={generatePath(container, {
+                containerId: row.original.id,
+              })}
+            >
+              {value}
+            </Link>
+          )
+        },
       },
       {
         id: 'capacity',
