@@ -12,7 +12,10 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 
 const useStyles = makeStyles({
   container: {
-    padding: 150,
+    paddingTop: 92,
+    paddingLeft: 24,
+    paddingRight: 24,
+    paddingBottom: 24,
     height: '100%',
   },
 })

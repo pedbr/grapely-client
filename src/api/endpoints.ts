@@ -11,10 +11,12 @@ export default {
   //--------------WINERY ROUTES-------------//
   getWineries: '/winery',
   addWinery: '/winery/add',
+  getWineryById: (wineryId: string) => `/winery/${wineryId}`,
   editWinery: (wineryId: string) => `/winery/edit/${wineryId}`,
   deleteWinery: (wineryId: string) => `/winery/delete/${wineryId}`,
 
   //--------------CONTAINER ROUTES-------------//
+  getContainers: '/container',
   getWineryContainers: (wineryId: string) => `/container/winery/${wineryId}`,
   addContainer: '/container/add',
   editContainer: (containerId: string) => `/container/edit/${containerId}`,

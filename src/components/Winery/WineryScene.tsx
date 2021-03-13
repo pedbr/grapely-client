@@ -50,11 +50,24 @@ const WineryScene = () => {
     setOpen(false)
   }
 
-  const fetchWineries = async () => {
+  const fetchContainers = async () => {
     const res = await get(endpoints.getWineryContainers(wineryId))
     return res
   }
-  const { data, isLoading } = useQuery('containers', fetchWineries)
+
+  const fetchWinery = async () => {
+    const res = await get(endpoints.getWineryById(wineryId))
+    return res
+  }
+
+  const { data: containers, isLoading: containersLoading } = useQuery(
+    `containers-${wineryId}`,
+    fetchContainers
+  )
+  const { data: winery, isLoading: wineryLoading } = useQuery(
+    `winery-${wineryId}`,
+    fetchWinery
+  )
 
   const columns = React.useMemo(
     () => [
@@ -96,21 +109,22 @@ const WineryScene = () => {
     []
   )
 
-  if (isLoading || !data) return <div>Loading...</div>
+  if (containersLoading || !containers || wineryLoading || !winery)
+    return <div>Loading...</div>
 
   return (
     <Card>
       <Grid container spacing={3} justify={'space-between'}>
         <Grid item xs={12}>
           <div className={classes.headerContainer}>
-            <Header text={'Containers'} />
+            <Header text={winery.data.name} />
             <Button onClick={handleClickOpen} variant={'outlined'}>
               Create
             </Button>
           </div>
         </Grid>
         <Grid item xs={12}>
-          <Table data={data.data} columns={columns} />
+          <Table data={containers.data} columns={columns} />
         </Grid>
       </Grid>
       <Dialog open={open} onClose={handleClose}>

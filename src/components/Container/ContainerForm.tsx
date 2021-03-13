@@ -27,7 +27,7 @@ const ContainerForm = ({ closeDialog, wineryId }: Props) => {
     (data: any) => post(endpoints.addContainer, data),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries('containers')
+        queryClient.invalidateQueries(`containers-${wineryId}`)
         closeDialog()
       },
     }
@@ -40,7 +40,7 @@ const ContainerForm = ({ closeDialog, wineryId }: Props) => {
       name,
       capacity,
       type,
-      wineryId,
+      currentWineryId: wineryId,
     }
     mutation.mutate(container)
   }

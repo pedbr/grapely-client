@@ -3,8 +3,11 @@ import jwtDecode from 'jwt-decode'
 import history from 'utils/history'
 import { logout, auth } from 'constants/paths'
 
+// export const BASE_URL =
+//   'https://europe-west1-winery-app-b819d.cloudfunctions.net/api'
+
 export const BASE_URL =
-  'https://europe-west1-winery-app-b819d.cloudfunctions.net/api'
+  'http://localhost:5001/winery-app-b819d/europe-west1/api'
 
 type MethodType =
   | 'get'

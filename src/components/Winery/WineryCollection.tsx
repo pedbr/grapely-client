@@ -50,7 +50,10 @@ const WineryCollection = () => {
     const res = await get(endpoints.getWineries)
     return res
   }
-  const { data, isLoading } = useQuery('wineries', fetchWineries)
+  const { data: wineries, isLoading: wineriesLoading } = useQuery(
+    'wineries',
+    fetchWineries
+  )
 
   const columns = React.useMemo(
     () => [
@@ -99,7 +102,7 @@ const WineryCollection = () => {
     []
   )
 
-  if (isLoading || !data) return <div>Loading...</div>
+  if (wineriesLoading || !wineries) return <div>Loading...</div>
 
   return (
     <Card>
@@ -113,7 +116,7 @@ const WineryCollection = () => {
           </div>
         </Grid>
         <Grid item xs={12}>
-          <Table data={data.data} columns={columns} />
+          <Table data={wineries.data} columns={columns} />
         </Grid>
       </Grid>
       <Dialog open={open} onClose={handleClose}>
