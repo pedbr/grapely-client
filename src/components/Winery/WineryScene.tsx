@@ -38,7 +38,7 @@ const WineryScene = () => {
     (containerId: string) => deleteCall(endpoints.deleteContainer(containerId)),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries('containers')
+        queryClient.invalidateQueries(`containers-${wineryId}`)
       },
     }
   )

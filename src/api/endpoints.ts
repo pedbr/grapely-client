@@ -17,12 +17,15 @@ export default {
 
   //--------------CONTAINER ROUTES-------------//
   getContainers: '/container',
+  getContainerById: (containerId: string) => `/container/${containerId}`,
   getWineryContainers: (wineryId: string) => `/container/winery/${wineryId}`,
   addContainer: '/container/add',
   editContainer: (containerId: string) => `/container/edit/${containerId}`,
   deleteContainer: (containerId: string) => `/container/delete/${containerId}`,
 
   //--------------BATCH ROUTES-------------//
+  getBatches: '/batch',
+  getBatchById: (batchId: string) => `/container/${batchId}`,
   getContainerBatches: (containerId: string) =>
     `/batch/container/${containerId}`,
   addBatch: '/batch/add',
