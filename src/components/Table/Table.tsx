@@ -13,7 +13,6 @@ interface Props {
 }
 
 const Table = ({ columns, data }: Props) => {
-  // Use the state and functions returned from useTable to build your UI
   const { getTableProps, headerGroups, rows, prepareRow } = useTable(
     {
       columns,
@@ -22,7 +21,6 @@ const Table = ({ columns, data }: Props) => {
     useSortBy
   )
 
-  // Render the UI for your table
   return (
     <MaUTable {...getTableProps()}>
       <TableHead>

@@ -13,11 +13,17 @@ import { generatePath, Link, useParams } from 'react-router-dom'
 import { batch } from 'constants/paths'
 import BatchForm from 'components/Batch/BatchForm'
 
+const CREATE_MODE = 'create'
+const EDIT_MODE = 'edit'
+
 const useStyles = makeStyles((theme) => ({
   headerContainer: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  tableContainer: {
+    overflow: 'auto',
   },
   link: {
     textDecoration: 'none',
@@ -31,7 +37,9 @@ interface RouteParams {
 
 const ContainerScene = () => {
   const classes = useStyles()
-  const [open, setOpen] = React.useState(false)
+  const [openCreateForm, setOpenCreateForm] = React.useState(false)
+  const [openEditForm, setOpenEditForm] = React.useState(false)
+  const [selectedBatch, setSelectedBatch] = React.useState()
   const queryClient = useQueryClient()
   const { containerId } = useParams<RouteParams>()
   const mutation = useMutation(
@@ -43,12 +51,17 @@ const ContainerScene = () => {
     }
   )
 
-  const handleClickOpen = () => {
-    setOpen(true)
+  const toggleOpenCreateForm = () => {
+    setOpenCreateForm(!openCreateForm)
   }
 
-  const handleClose = () => {
-    setOpen(false)
+  const toggleOpenEditForm = () => {
+    setOpenEditForm(!openEditForm)
+  }
+
+  const handleEdit = (batch: any) => {
+    setSelectedBatch(batch)
+    toggleOpenEditForm()
   }
 
   const fetchBatches = async () => {
@@ -136,7 +149,7 @@ const ContainerScene = () => {
       },
       {
         Header: () => null,
-        id: 'actions',
+        id: 'delete',
         Cell({ row }: any) {
           return (
             <Button
@@ -146,6 +159,13 @@ const ContainerScene = () => {
               Delete
             </Button>
           )
+        },
+      },
+      {
+        Header: () => null,
+        id: 'edit',
+        Cell({ row }: any) {
+          return <Button onClick={() => handleEdit(row.original)}>Edit</Button>
         },
       },
     ],
@@ -161,17 +181,29 @@ const ContainerScene = () => {
         <Grid item xs={12}>
           <div className={classes.headerContainer}>
             <Header text={container.data.name} />
-            <Button onClick={handleClickOpen} variant={'outlined'}>
+            <Button onClick={toggleOpenCreateForm} variant={'outlined'}>
               Create
             </Button>
           </div>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} className={classes.tableContainer}>
           <Table data={batches.data} columns={columns} />
         </Grid>
       </Grid>
-      <Dialog open={open} onClose={handleClose}>
-        <BatchForm closeDialog={handleClose} containerId={containerId} />
+      <Dialog open={openCreateForm} onClose={toggleOpenCreateForm}>
+        <BatchForm
+          closeDialog={toggleOpenCreateForm}
+          containerId={containerId}
+          mode={CREATE_MODE}
+        />
+      </Dialog>
+      <Dialog open={openEditForm} onClose={toggleOpenEditForm}>
+        <BatchForm
+          closeDialog={toggleOpenEditForm}
+          containerId={containerId}
+          selectedBatch={selectedBatch}
+          mode={EDIT_MODE}
+        />
       </Dialog>
     </Card>
   )

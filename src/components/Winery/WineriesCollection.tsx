@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  tableContainer: {
+    overflow: 'auto',
+  },
   link: {
     textDecoration: 'none',
     color: theme.palette.text.primary,
@@ -132,7 +135,7 @@ const WineriesCollection = () => {
             </Button>
           </div>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} className={classes.tableContainer}>
           <Table data={wineries.data} columns={columns} />
         </Grid>
       </Grid>

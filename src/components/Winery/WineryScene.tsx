@@ -13,11 +13,17 @@ import { generatePath, Link, useParams } from 'react-router-dom'
 import ContainerForm from 'components/Container/ContainerForm'
 import { container } from 'constants/paths'
 
+const CREATE_MODE = 'create'
+const EDIT_MODE = 'edit'
+
 const useStyles = makeStyles((theme) => ({
   headerContainer: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  tableContainer: {
+    overflow: 'auto',
   },
   link: {
     textDecoration: 'none',
@@ -31,7 +37,9 @@ interface RouteParams {
 
 const WineryScene = () => {
   const classes = useStyles()
-  const [open, setOpen] = React.useState(false)
+  const [openCreateForm, setOpenCreateForm] = React.useState(false)
+  const [openEditForm, setOpenEditForm] = React.useState(false)
+  const [selectedContainer, setSelectedContainer] = React.useState()
   const queryClient = useQueryClient()
   const { wineryId } = useParams<RouteParams>()
   const mutation = useMutation(
@@ -43,12 +51,17 @@ const WineryScene = () => {
     }
   )
 
-  const handleClickOpen = () => {
-    setOpen(true)
+  const toggleOpenCreateForm = () => {
+    setOpenCreateForm(!openCreateForm)
   }
 
-  const handleClose = () => {
-    setOpen(false)
+  const toggleOpenEditForm = () => {
+    setOpenEditForm(!openEditForm)
+  }
+
+  const handleEdit = (container: any) => {
+    setSelectedContainer(container)
+    toggleOpenEditForm()
   }
 
   const fetchContainers = async () => {
@@ -106,7 +119,7 @@ const WineryScene = () => {
       },
       {
         Header: () => null,
-        id: 'actions',
+        id: 'delete',
         Cell({ row }: any) {
           return (
             <Button
@@ -116,6 +129,13 @@ const WineryScene = () => {
               Delete
             </Button>
           )
+        },
+      },
+      {
+        Header: () => null,
+        id: 'edit',
+        Cell({ row }: any) {
+          return <Button onClick={() => handleEdit(row.original)}>Edit</Button>
         },
       },
     ],
@@ -131,17 +151,29 @@ const WineryScene = () => {
         <Grid item xs={12}>
           <div className={classes.headerContainer}>
             <Header text={winery.data.name} />
-            <Button onClick={handleClickOpen} variant={'outlined'}>
+            <Button onClick={toggleOpenCreateForm} variant={'outlined'}>
               Create
             </Button>
           </div>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} className={classes.tableContainer}>
           <Table data={containers.data} columns={columns} />
         </Grid>
       </Grid>
-      <Dialog open={open} onClose={handleClose}>
-        <ContainerForm closeDialog={handleClose} wineryId={wineryId} />
+      <Dialog open={openCreateForm} onClose={toggleOpenCreateForm}>
+        <ContainerForm
+          closeDialog={toggleOpenCreateForm}
+          wineryId={wineryId}
+          mode={CREATE_MODE}
+        />
+      </Dialog>
+      <Dialog open={openEditForm} onClose={toggleOpenEditForm}>
+        <ContainerForm
+          closeDialog={toggleOpenEditForm}
+          wineryId={wineryId}
+          selectedContainer={selectedContainer}
+          mode={EDIT_MODE}
+        />
       </Dialog>
     </Card>
   )

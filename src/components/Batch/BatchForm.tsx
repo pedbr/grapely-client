@@ -5,8 +5,11 @@ import { useForm } from 'react-hook-form'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import { useMutation, useQueryClient } from 'react-query'
-import { post } from 'api'
+import { post, patch } from 'api'
 import endpoints from 'api/endpoints'
+
+const CREATE_MODE = 'create'
+const EDIT_MODE = 'edit'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -17,13 +20,37 @@ const useStyles = makeStyles((theme) => ({
 interface Props {
   closeDialog: () => void
   containerId: string
+  selectedBatch?: any
+  mode: string
 }
 
-const BatchForm = ({ closeDialog, containerId }: Props) => {
+const BatchForm = ({
+  closeDialog,
+  containerId,
+  selectedBatch,
+  mode,
+}: Props) => {
   const classes = useStyles()
   const { handleSubmit, register, errors } = useForm()
   const queryClient = useQueryClient()
-  const mutation = useMutation((data: any) => post(endpoints.addBatch, data), {
+
+  const getRequestType = () => {
+    if (mode === EDIT_MODE && selectedBatch) {
+      return patch
+    }
+    return post
+  }
+
+  const getEndpoint = () => {
+    if (mode === EDIT_MODE && selectedBatch) {
+      return endpoints.editBatch(selectedBatch.id)
+    }
+    return endpoints.addBatch
+  }
+
+  const request = getRequestType()
+
+  const mutation = useMutation((data: any) => request(getEndpoint(), data), {
     onSuccess: () => {
       queryClient.invalidateQueries(`batches-${containerId}`)
       closeDialog()
@@ -70,6 +97,7 @@ const BatchForm = ({ closeDialog, containerId }: Props) => {
               type={'text'}
               variant={'outlined'}
               inputRef={register({ required: 'This field is required' })}
+              defaultValue={selectedBatch?.name}
               error={Boolean(errors.name)}
               helperText={errors.name?.message}
             />
@@ -82,6 +110,7 @@ const BatchForm = ({ closeDialog, containerId }: Props) => {
               type={'number'}
               variant={'outlined'}
               inputRef={register({ required: 'This field is required' })}
+              defaultValue={selectedBatch?.amount}
               error={Boolean(errors.amount)}
               helperText={errors.amount?.message}
             />
@@ -94,6 +123,7 @@ const BatchForm = ({ closeDialog, containerId }: Props) => {
               type={'number'}
               variant={'outlined'}
               inputRef={register({ required: 'This field is required' })}
+              defaultValue={selectedBatch?.year}
               error={Boolean(errors.year)}
               helperText={errors.year?.message}
             />
@@ -106,6 +136,7 @@ const BatchForm = ({ closeDialog, containerId }: Props) => {
               type={'text'}
               variant={'outlined'}
               inputRef={register({ required: 'This field is required' })}
+              defaultValue={selectedBatch?.product}
               error={Boolean(errors.product)}
               helperText={errors.product?.message}
             />
@@ -118,6 +149,7 @@ const BatchForm = ({ closeDialog, containerId }: Props) => {
               type={'text'}
               variant={'outlined'}
               inputRef={register({ required: 'This field is required' })}
+              defaultValue={selectedBatch?.type}
               error={Boolean(errors.type)}
               helperText={errors.type?.message}
             />
@@ -130,6 +162,7 @@ const BatchForm = ({ closeDialog, containerId }: Props) => {
               type={'number'}
               variant={'outlined'}
               inputRef={register({ required: 'This field is required' })}
+              defaultValue={selectedBatch?.targetTemperature}
               error={Boolean(errors.targetTemperature)}
               helperText={errors.targetTemperature?.message}
             />
@@ -142,6 +175,7 @@ const BatchForm = ({ closeDialog, containerId }: Props) => {
               type={'text'}
               variant={'outlined'}
               inputRef={register({ required: 'This field is required' })}
+              defaultValue={selectedBatch?.startDate}
               error={Boolean(errors.startDate)}
               helperText={errors.startDate?.message}
             />
@@ -154,6 +188,7 @@ const BatchForm = ({ closeDialog, containerId }: Props) => {
               type={'text'}
               variant={'outlined'}
               inputRef={register({ required: 'This field is required' })}
+              defaultValue={selectedBatch?.estimatedEndDate}
               error={Boolean(errors.estimatedEndDate)}
               helperText={errors.estimatedEndDate?.message}
             />
@@ -166,13 +201,14 @@ const BatchForm = ({ closeDialog, containerId }: Props) => {
               type={'text'}
               variant={'outlined'}
               inputRef={register({ required: 'This field is required' })}
+              defaultValue={selectedBatch?.endDate}
               error={Boolean(errors.endDate)}
               helperText={errors.endDate?.message}
             />
           </Grid>
           <Grid item xs={12}>
             <Button disabled={isLoading} variant={'contained'} type='submit'>
-              Create Batch
+              {mode === CREATE_MODE ? 'Create Winery' : 'Save Changes'}
             </Button>
           </Grid>
         </Grid>
