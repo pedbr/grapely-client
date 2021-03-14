@@ -25,7 +25,7 @@ export default {
 
   //--------------BATCH ROUTES-------------//
   getBatches: '/batch',
-  getBatchById: (batchId: string) => `/container/${batchId}`,
+  getBatchById: (batchId: string) => `/batch/${batchId}`,
   getContainerBatches: (containerId: string) =>
     `/batch/container/${containerId}`,
   addBatch: '/batch/add',

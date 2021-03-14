@@ -13,6 +13,9 @@ import Dialog from '@material-ui/core/Dialog'
 import WineryForm from './WineryForm'
 import { generatePath, Link } from 'react-router-dom'
 
+const CREATE_MODE = 'create'
+const EDIT_MODE = 'edit'
+
 const useStyles = makeStyles((theme) => ({
   headerContainer: {
     display: 'flex',
@@ -27,9 +30,11 @@ const useStyles = makeStyles((theme) => ({
 
 const WineriesCollection = () => {
   const classes = useStyles()
-  const [open, setOpen] = React.useState(false)
+  const [openCreateForm, setOpenCreateForm] = React.useState(false)
+  const [openEditForm, setOpenEditForm] = React.useState(false)
+  const [selectedWinery, setSelectedWinery] = React.useState()
   const queryClient = useQueryClient()
-  const mutation = useMutation(
+  const deleteMutation = useMutation(
     (wineryId: string) => deleteCall(endpoints.deleteWinery(wineryId)),
     {
       onSuccess: () => {
@@ -38,12 +43,17 @@ const WineriesCollection = () => {
     }
   )
 
-  const handleClickOpen = () => {
-    setOpen(true)
+  const toggleOpenCreateForm = () => {
+    setOpenCreateForm(!openCreateForm)
   }
 
-  const handleClose = () => {
-    setOpen(false)
+  const toggleOpenEditForm = () => {
+    setOpenEditForm(!openEditForm)
+  }
+
+  const handleEdit = (winery: any) => {
+    setSelectedWinery(winery)
+    toggleOpenEditForm()
   }
 
   const fetchWineries = async () => {
@@ -86,16 +96,23 @@ const WineriesCollection = () => {
       },
       {
         Header: () => null,
-        id: 'actions',
+        id: 'delete',
         Cell({ row }: any) {
           return (
             <Button
-              disabled={mutation.isLoading}
-              onClick={() => mutation.mutate(row.original.id)}
+              disabled={deleteMutation.isLoading}
+              onClick={() => deleteMutation.mutate(row.original.id)}
             >
               Delete
             </Button>
           )
+        },
+      },
+      {
+        Header: () => null,
+        id: 'edit',
+        Cell({ row }: any) {
+          return <Button onClick={() => handleEdit(row.original)}>Edit</Button>
         },
       },
     ],
@@ -110,7 +127,7 @@ const WineriesCollection = () => {
         <Grid item xs={12}>
           <div className={classes.headerContainer}>
             <Header text={'Wineries'} />
-            <Button onClick={handleClickOpen} variant={'outlined'}>
+            <Button onClick={toggleOpenCreateForm} variant={'outlined'}>
               Create
             </Button>
           </div>
@@ -119,8 +136,15 @@ const WineriesCollection = () => {
           <Table data={wineries.data} columns={columns} />
         </Grid>
       </Grid>
-      <Dialog open={open} onClose={handleClose}>
-        <WineryForm closeDialog={handleClose} />
+      <Dialog open={openCreateForm} onClose={toggleOpenCreateForm}>
+        <WineryForm closeDialog={toggleOpenCreateForm} mode={CREATE_MODE} />
+      </Dialog>
+      <Dialog open={openEditForm} onClose={toggleOpenEditForm}>
+        <WineryForm
+          closeDialog={toggleOpenEditForm}
+          selectedWinery={selectedWinery}
+          mode={EDIT_MODE}
+        />
       </Dialog>
     </Card>
   )
