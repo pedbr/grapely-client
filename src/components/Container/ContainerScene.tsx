@@ -179,8 +179,11 @@ const ContainerScene = () => {
     <Card>
       <Grid container spacing={3} justify={'space-between'}>
         <Grid item xs={12}>
+          <Header text={container.data.name} />
+        </Grid>
+        <Grid item xs={12}>
           <div className={classes.headerContainer}>
-            <Header text={container.data.name} />
+            <Header h2 text={'Batches'} />
             <Button onClick={toggleOpenCreateForm} variant={'outlined'}>
               Create
             </Button>
