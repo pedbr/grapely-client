@@ -4,7 +4,6 @@ import { useQuery } from 'react-query'
 import { get } from 'api'
 import endpoints from 'api/endpoints'
 import Grid from '@material-ui/core/Grid'
-import Card from 'components/Card'
 import Header from 'components/Header'
 import { useParams } from 'react-router-dom'
 
@@ -37,15 +36,13 @@ const ContainerScene = () => {
   if (batchLoading || !batch) return <div>Loading...</div>
 
   return (
-    <Card>
-      <Grid container spacing={3} justify={'space-between'}>
-        <Grid item xs={12}>
-          <div className={classes.headerContainer}>
-            <Header text={batch.data.name} />
-          </div>
-        </Grid>
+    <Grid container spacing={3} justify={'space-between'}>
+      <Grid item xs={12}>
+        <div className={classes.headerContainer}>
+          <Header text={batch.data.name} />
+        </div>
       </Grid>
-    </Card>
+    </Grid>
   )
 }
 
