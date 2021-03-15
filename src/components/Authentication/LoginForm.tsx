@@ -66,7 +66,7 @@ const LoginForm = () => {
                 helperText={errors?.password?.message}
               />
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={12}>
               <Button disabled={loading} variant={'contained'} type='submit'>
                 Login
               </Button>

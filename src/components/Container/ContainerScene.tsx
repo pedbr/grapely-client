@@ -176,39 +176,43 @@ const ContainerScene = () => {
     return <div>Loading...</div>
 
   return (
-    <Card>
-      <Grid container spacing={3} justify={'space-between'}>
-        <Grid item xs={12}>
-          <Header text={container.data.name} />
-        </Grid>
-        <Grid item xs={12}>
-          <div className={classes.headerContainer}>
-            <Header h2 text={'Batches'} />
-            <Button onClick={toggleOpenCreateForm} variant={'outlined'}>
-              Create
-            </Button>
-          </div>
-        </Grid>
-        <Grid item xs={12} className={classes.tableContainer}>
-          <Table data={batches.data} columns={columns} />
-        </Grid>
+    <Grid container spacing={3}>
+      <Grid item xs={12}>
+        <Header text={container.data.name} />
       </Grid>
-      <Dialog open={openCreateForm} onClose={toggleOpenCreateForm}>
-        <BatchForm
-          closeDialog={toggleOpenCreateForm}
-          containerId={containerId}
-          mode={CREATE_MODE}
-        />
-      </Dialog>
-      <Dialog open={openEditForm} onClose={toggleOpenEditForm}>
-        <BatchForm
-          closeDialog={toggleOpenEditForm}
-          containerId={containerId}
-          selectedBatch={selectedBatch}
-          mode={EDIT_MODE}
-        />
-      </Dialog>
-    </Card>
+      <Grid item xs={12}>
+        <Card>
+          <Grid container spacing={3} justify={'space-between'}>
+            <Grid item xs={12}>
+              <div className={classes.headerContainer}>
+                <Header h2 text={'Batches'} />
+                <Button onClick={toggleOpenCreateForm} variant={'outlined'}>
+                  Create
+                </Button>
+              </div>
+            </Grid>
+            <Grid item xs={12} className={classes.tableContainer}>
+              <Table data={batches.data} columns={columns} />
+            </Grid>
+          </Grid>
+          <Dialog open={openCreateForm} onClose={toggleOpenCreateForm}>
+            <BatchForm
+              closeDialog={toggleOpenCreateForm}
+              containerId={containerId}
+              mode={CREATE_MODE}
+            />
+          </Dialog>
+          <Dialog open={openEditForm} onClose={toggleOpenEditForm}>
+            <BatchForm
+              closeDialog={toggleOpenEditForm}
+              containerId={containerId}
+              selectedBatch={selectedBatch}
+              mode={EDIT_MODE}
+            />
+          </Dialog>
+        </Card>
+      </Grid>
+    </Grid>
   )
 }
 

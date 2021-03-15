@@ -146,39 +146,43 @@ const WineryScene = () => {
     return <div>Loading...</div>
 
   return (
-    <Card>
-      <Grid container spacing={3} justify={'space-between'}>
-        <Grid item xs={12}>
-          <Header text={winery.data.name} />
-        </Grid>
-        <Grid item xs={12}>
-          <div className={classes.headerContainer}>
-            <Header h2 text={'Containers'} />
-            <Button onClick={toggleOpenCreateForm} variant={'outlined'}>
-              Create
-            </Button>
-          </div>
-        </Grid>
-        <Grid item xs={12} className={classes.tableContainer}>
-          <Table data={containers.data} columns={columns} />
-        </Grid>
+    <Grid container spacing={3}>
+      <Grid item xs={12}>
+        <Header text={winery.data.name} />
       </Grid>
-      <Dialog open={openCreateForm} onClose={toggleOpenCreateForm}>
-        <ContainerForm
-          closeDialog={toggleOpenCreateForm}
-          wineryId={wineryId}
-          mode={CREATE_MODE}
-        />
-      </Dialog>
-      <Dialog open={openEditForm} onClose={toggleOpenEditForm}>
-        <ContainerForm
-          closeDialog={toggleOpenEditForm}
-          wineryId={wineryId}
-          selectedContainer={selectedContainer}
-          mode={EDIT_MODE}
-        />
-      </Dialog>
-    </Card>
+      <Grid item xs={12}>
+        <Card>
+          <Grid container spacing={3} justify={'space-between'}>
+            <Grid item xs={12}>
+              <div className={classes.headerContainer}>
+                <Header h2 text={'Containers'} />
+                <Button onClick={toggleOpenCreateForm} variant={'outlined'}>
+                  Create
+                </Button>
+              </div>
+            </Grid>
+            <Grid item xs={12} className={classes.tableContainer}>
+              <Table data={containers.data} columns={columns} />
+            </Grid>
+          </Grid>
+          <Dialog open={openCreateForm} onClose={toggleOpenCreateForm}>
+            <ContainerForm
+              closeDialog={toggleOpenCreateForm}
+              wineryId={wineryId}
+              mode={CREATE_MODE}
+            />
+          </Dialog>
+          <Dialog open={openEditForm} onClose={toggleOpenEditForm}>
+            <ContainerForm
+              closeDialog={toggleOpenEditForm}
+              wineryId={wineryId}
+              selectedContainer={selectedContainer}
+              mode={EDIT_MODE}
+            />
+          </Dialog>
+        </Card>
+      </Grid>
+    </Grid>
   )
 }
 
