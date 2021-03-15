@@ -6,6 +6,8 @@ import endpoints from 'api/endpoints'
 import Grid from '@material-ui/core/Grid'
 import Header from 'components/Header'
 import { useParams } from 'react-router-dom'
+import Card from 'components/Card'
+import TasksCollection from 'components/Tasks/TasksCollection'
 
 const useStyles = makeStyles({
   headerContainer: {
@@ -41,6 +43,14 @@ const ContainerScene = () => {
         <div className={classes.headerContainer}>
           <Header text={batch.data.name} />
         </div>
+      </Grid>
+      <Grid item xs={12}>
+        <Card>
+          <TasksCollection
+            fetchEndpoint={endpoints.getBatchTasks}
+            resourceTypeId={'batchId'}
+          />
+        </Card>
       </Grid>
     </Grid>
   )

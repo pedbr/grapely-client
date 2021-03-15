@@ -7,6 +7,7 @@ import Card from 'components/Card'
 import Header from 'components/Header'
 import { useParams } from 'react-router-dom'
 import ContainersCollection from 'components/Container/ContainersCollection'
+import TasksCollection from 'components/Tasks/TasksCollection'
 
 interface RouteParams {
   wineryId: string
@@ -35,6 +36,14 @@ const WineryScene = () => {
       <Grid item xs={12}>
         <Card>
           <ContainersCollection />
+        </Card>
+      </Grid>
+      <Grid item xs={12}>
+        <Card>
+          <TasksCollection
+            fetchEndpoint={endpoints.getWineryTasks}
+            resourceTypeId={'wineryId'}
+          />
         </Card>
       </Grid>
     </Grid>

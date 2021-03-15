@@ -8,6 +8,7 @@ import Header from 'components/Header'
 import { useParams } from 'react-router-dom'
 
 import BatchesCollection from 'components/Batch/BatchesCollection'
+import TasksCollection from 'components/Tasks/TasksCollection'
 
 interface RouteParams {
   containerId: string
@@ -36,6 +37,14 @@ const ContainerScene = () => {
       <Grid item xs={12}>
         <Card>
           <BatchesCollection />
+        </Card>
+      </Grid>
+      <Grid item xs={12}>
+        <Card>
+          <TasksCollection
+            fetchEndpoint={endpoints.getContainerTasks}
+            resourceTypeId={'containerId'}
+          />
         </Card>
       </Grid>
     </Grid>
