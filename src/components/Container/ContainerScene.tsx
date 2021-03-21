@@ -41,7 +41,7 @@ const ContainerScene = () => {
       </Grid>
       <Grid item xs={12}>
         <Card>
-          <TasksCollection />
+          <TasksCollection parentId={containerId} />
         </Card>
       </Grid>
     </Grid>

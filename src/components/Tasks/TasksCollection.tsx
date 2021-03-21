@@ -8,7 +8,6 @@ import Grid from '@material-ui/core/Grid'
 import Header from 'components/Header'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
-import { useParams } from 'react-router-dom'
 import TaskForm from './TaskForm'
 
 const CREATE_MODE = 'create'
@@ -29,17 +28,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-interface RouteParams {
+interface Props {
   parentId: string
 }
 
-const TasksCollection = () => {
+const TasksCollection = ({ parentId }: Props) => {
   const classes = useStyles()
   const [openCreateForm, setOpenCreateForm] = React.useState(false)
   const [openEditForm, setOpenEditForm] = React.useState(false)
   const [selectedTask, setSelectedTask] = React.useState()
   const queryClient = useQueryClient()
-  const { parentId } = useParams<RouteParams>()
 
   const mutation = useMutation(
     (taskId: string) => deleteCall(endpoints.deleteTask(taskId)),

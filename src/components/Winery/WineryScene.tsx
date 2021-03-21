@@ -40,7 +40,7 @@ const WineryScene = () => {
       </Grid>
       <Grid item xs={12}>
         <Card>
-          <TasksCollection />
+          <TasksCollection parentId={wineryId} />
         </Card>
       </Grid>
     </Grid>
