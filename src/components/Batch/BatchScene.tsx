@@ -8,6 +8,7 @@ import Header from 'components/Header'
 import { useParams } from 'react-router-dom'
 import Card from 'components/Card'
 import TasksCollection from 'components/Tasks/TasksCollection'
+import NotesCollection from 'components/Notes/NotesCollection'
 
 const useStyles = makeStyles({
   headerContainer: {
@@ -47,6 +48,11 @@ const ContainerScene = () => {
       <Grid item xs={12}>
         <Card>
           <TasksCollection parentId={batchId} />
+        </Card>
+      </Grid>
+      <Grid item xs={12}>
+        <Card>
+          <NotesCollection parentId={batchId} />
         </Card>
       </Grid>
     </Grid>

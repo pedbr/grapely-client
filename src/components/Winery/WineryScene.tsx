@@ -8,6 +8,7 @@ import Header from 'components/Header'
 import { useParams } from 'react-router-dom'
 import ContainersCollection from 'components/Container/ContainersCollection'
 import TasksCollection from 'components/Tasks/TasksCollection'
+import NotesCollection from 'components/Notes/NotesCollection'
 
 interface RouteParams {
   wineryId: string
@@ -41,6 +42,11 @@ const WineryScene = () => {
       <Grid item xs={12}>
         <Card>
           <TasksCollection parentId={wineryId} />
+        </Card>
+      </Grid>
+      <Grid item xs={12}>
+        <Card>
+          <NotesCollection parentId={wineryId} />
         </Card>
       </Grid>
     </Grid>

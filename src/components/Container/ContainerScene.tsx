@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom'
 
 import BatchesCollection from 'components/Batch/BatchesCollection'
 import TasksCollection from 'components/Tasks/TasksCollection'
+import NotesCollection from 'components/Notes/NotesCollection'
 
 interface RouteParams {
   containerId: string
@@ -42,6 +43,11 @@ const ContainerScene = () => {
       <Grid item xs={12}>
         <Card>
           <TasksCollection parentId={containerId} />
+        </Card>
+      </Grid>
+      <Grid item xs={12}>
+        <Card>
+          <NotesCollection parentId={containerId} />
         </Card>
       </Grid>
     </Grid>
