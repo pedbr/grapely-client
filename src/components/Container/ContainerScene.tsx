@@ -41,10 +41,7 @@ const ContainerScene = () => {
       </Grid>
       <Grid item xs={12}>
         <Card>
-          <TasksCollection
-            fetchEndpoint={endpoints.getContainerTasks}
-            resourceTypeId={'containerId'}
-          />
+          <TasksCollection />
         </Card>
       </Grid>
     </Grid>

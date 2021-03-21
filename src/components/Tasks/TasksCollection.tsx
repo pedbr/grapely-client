@@ -30,30 +30,22 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 interface RouteParams {
-  wineryId: string
-  containerId: string
-  batchId: string
+  parentId: string
 }
 
-interface Props {
-  fetchEndpoint: any
-  resourceTypeId: string
-}
-
-const TasksCollection = ({ fetchEndpoint, resourceTypeId }: Props) => {
+const TasksCollection = () => {
   const classes = useStyles()
   const [openCreateForm, setOpenCreateForm] = React.useState(false)
   const [openEditForm, setOpenEditForm] = React.useState(false)
   const [selectedTask, setSelectedTask] = React.useState()
   const queryClient = useQueryClient()
-  const { wineryId, containerId, batchId } = useParams<RouteParams>()
-  const resourceId = wineryId || containerId || batchId
+  const { parentId } = useParams<RouteParams>()
 
   const mutation = useMutation(
     (taskId: string) => deleteCall(endpoints.deleteTask(taskId)),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(`tasks-${resourceId}`)
+        queryClient.invalidateQueries(`tasks-${parentId}`)
       },
     }
   )
@@ -72,12 +64,12 @@ const TasksCollection = ({ fetchEndpoint, resourceTypeId }: Props) => {
   }
 
   const fetchTasks = async () => {
-    const res = await get(fetchEndpoint(resourceId))
+    const res = await get(endpoints.getParentTasks(parentId))
     return res
   }
 
   const { data: tasks, isLoading: tasksLoading } = useQuery(
-    `tasks-${resourceId}`,
+    `tasks-${parentId}`,
     fetchTasks
   )
 
@@ -148,18 +140,16 @@ const TasksCollection = ({ fetchEndpoint, resourceTypeId }: Props) => {
       <Dialog open={openCreateForm} onClose={toggleOpenCreateForm}>
         <TaskForm
           closeDialog={toggleOpenCreateForm}
-          resourceId={resourceId}
+          parentId={parentId}
           mode={CREATE_MODE}
-          resourceTypeId={resourceTypeId}
         />
       </Dialog>
       <Dialog open={openEditForm} onClose={toggleOpenEditForm}>
         <TaskForm
           closeDialog={toggleOpenEditForm}
-          resourceId={resourceId}
+          parentId={parentId}
           selectedTask={selectedTask}
           mode={EDIT_MODE}
-          resourceTypeId={resourceTypeId}
         />
       </Dialog>
     </>

@@ -34,18 +34,15 @@ export default {
 
   //--------------TASK ROUTES-------------//
   getTasks: '/task',
-  getWineryTasks: (wineryId: string) => `/task/winery/${wineryId}`,
-  getContainerTasks: (containerId: string) => `/task/container/${containerId}`,
-  getBatchTasks: (batchId: string) => `/task/batch/${batchId}`,
+  getTaskById: (taskId: string) => `/task/${taskId}`,
+  getParentTasks: (parentId: string) => `/task/parent/${parentId}`,
   addTask: '/task/add',
   editTask: (taskId: string) => `/task/edit/${taskId}`,
   deleteTask: (taskId: string) => `/task/delete/${taskId}`,
 
   //--------------NOTE ROUTES-------------//
-  getWineryNotes: (wineryId: string) => `/note/winery/${wineryId}`,
-  getContainerNotes: (containerId: string) => `/note/container/${containerId}`,
-  getBatchNotes: (batchId: string) => `/note/batch/${batchId}`,
-  getTaskNotes: (taskId: string) => `/note/task/${taskId}`,
+  getNoteById: (noteId: string) => `/note/${noteId}`,
+  getParentNotes: (parentId: string) => `/note/parent/${parentId}`,
   addNote: '/note/add',
   editNote: (noteId: string) => `/note/edit/${noteId}`,
   deleteNote: (noteId: string) => `/note/delete/${noteId}`,

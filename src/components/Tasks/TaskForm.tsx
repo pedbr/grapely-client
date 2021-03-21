@@ -19,19 +19,12 @@ const useStyles = makeStyles((theme) => ({
 
 interface Props {
   closeDialog: () => void
-  resourceId: string
+  parentId: string
   selectedTask?: any
   mode: string
-  resourceTypeId: string
 }
 
-const TaskForm = ({
-  closeDialog,
-  resourceId,
-  selectedTask,
-  mode,
-  resourceTypeId,
-}: Props) => {
+const TaskForm = ({ closeDialog, parentId, selectedTask, mode }: Props) => {
   const classes = useStyles()
   const { handleSubmit, register, errors } = useForm()
   const queryClient = useQueryClient()
@@ -54,7 +47,7 @@ const TaskForm = ({
 
   const mutation = useMutation((data: any) => request(getEndpoint(), data), {
     onSuccess: () => {
-      queryClient.invalidateQueries(`tasks-${resourceId}`)
+      queryClient.invalidateQueries(`tasks-${parentId}`)
       closeDialog()
     },
   })
@@ -67,7 +60,7 @@ const TaskForm = ({
       description,
       status,
       dueDate,
-      [resourceTypeId]: resourceId,
+      parentId,
     }
     mutation.mutate(task)
   }

@@ -40,10 +40,7 @@ const WineryScene = () => {
       </Grid>
       <Grid item xs={12}>
         <Card>
-          <TasksCollection
-            fetchEndpoint={endpoints.getWineryTasks}
-            resourceTypeId={'wineryId'}
-          />
+          <TasksCollection />
         </Card>
       </Grid>
     </Grid>
